@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmallLink | Painel Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #05010d; color: white; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        .nav-btn.active { background: #bc13fe; color: white; box-shadow: 0 0 25px rgba(188, 19, 254, 0.4); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Círculo Neon da sua imagem original */
+        .neon-bg {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 600px; height: 600px; border-radius: 50%;
+            border: 2px solid #bc13fe; box-shadow: 0 0 100px #bc13fe, inset 0 0 50px #bc13fe;
+            opacity: 0.05; z-index: -1; pointer-events: none;
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+
+    <div class="neon-bg"></div>
+
+    <aside class="w-full md:w-72 glass p-8 flex flex-col z-50">
+        <!-- LOGO SMALLINK COM ÍCONE -->
+        <div class="flex items-center gap-3 mb-10 px-2">
+            <div class="w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-br from-[#bc13fe] to-[#2463f1] shadow-lg shadow-purple-500/30">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <div class="text-2xl font-black tracking-tight">Small<span class="text-[#bc13fe]">Link</span></div>
+        </div>
+        
+        <nav class="flex md:flex-col gap-3">
+            <button onclick="switchTab('shortener')" class="nav-btn active text-left p-4 rounded-2xl font-bold transition-all">🔗 Encurtador</button>
+            <button onclick="switchTab('qrcode')" class="nav-btn text-left p-4 rounded-2xl font-bold transition-all">📱 QR Code</button>
+            <button onclick="switchTab('yt')" class="nav-btn text-left p-4 rounded-2xl font-bold transition-all">🎥 Downloader</button>
+        </nav>
+
+        <div class="mt-auto hidden md:block glass p-6 rounded-3xl border-yellow-500/20 text-center">
+            <p class="text-yellow-500 text-[10px] font-black uppercase mb-2">SaaS Business</p>
+            <button class="w-full bg-yellow-500 text-black py-2 rounded-xl text-xs font-black hover:scale-105 transition">UPGRADE PRO</button>
+        </div>
+    </aside>
+
+    <main class="flex-1 p-6 md:p-16">
+        <!-- ENCURTADOR -->
+        <section id="tab-shortener" class="tab-content active">
+            <h2 class="text-4xl font-black mb-8 text-white/90">Encurtador de Links</h2>
+            <div class="glass p-8 rounded-[35px] flex flex-col md:flex-row gap-4 mb-10 shadow-2xl">
+                <input id="short-url-input" type="text" placeholder="Cole seu link longo aqui..." class="flex-1 bg-black/50 p-5 rounded-2xl outline-none border border-white/5 focus:border-[#bc13fe]">
+                <button onclick="handleShorten()" id="btn-encurtar" class="bg-[#bc13fe] px-12 py-5 rounded-2xl font-black tracking-wide hover:brightness-110 transition">ENCURTAR</button>
+            </div>
+            <div id="links-list" class="space-y-4"></div>
+        </section>
+
+        <!-- QR CODE -->
+        <section id="tab-qrcode" class="tab-content">
+            <h2 class="text-4xl font-black mb-8">Gerador de QR Code</h2>
+            <div class="glass p-10 rounded-[40px] max-w-xl">
+                <input id="qr-input" type="text" placeholder="Link para o QR Code..." class="w-full bg-black/50 p-5 rounded-2xl mb-6 border border-white/5 outline-none focus:border-blue-500">
+                <button onclick="handleQR()" class="w-full bg-blue-600 py-5 rounded-2xl font-black shadow-lg shadow-blue-500/20">GERAR QR CODE</button>
+                <div id="qr-result" class="mt-10 flex flex-col items-center hidden">
+                    <div class="bg-white p-5 rounded-3xl shadow-2xl"><img id="qr-img" class="w-52 h-52"></div>
+                    <p class="mt-4 text-xs text-gray-500 font-bold uppercase tracking-widest">Clique com o botão direito para salvar</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DOWNLOADER -->
+        <section id="tab-yt" class="tab-content">
+            <h2 class="text-4xl font-black mb-8">YouTube Downloader</h2>
+            <div class="glass p-10 rounded-[40px] max-w-xl">
+                <input id="yt-url" type="text" placeholder="Cole o link do vídeo..." class="w-full bg-black/50 p-5 rounded-2xl mb-4 border border-white/5 outline-none focus:border-red-600">
+                <select id="yt-format" class="w-full bg-black p-5 rounded-2xl mb-8 border border-white/5 outline-none">
+                    <option value="mp3">Música (MP3)</option>
+                    <option value="mp4">Vídeo (MP4)</option>
+                </select>
+                <button onclick="handleYT()" class="w-full bg-red-600 py-5 rounded-2xl font-black shadow-lg shadow-red-600/20">BAIXAR MÍDIA</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
