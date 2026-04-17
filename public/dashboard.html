@@ -16,10 +16,11 @@
         .neon-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 500px; height: 500px; border-radius: 50%; border: 2px solid #bc13fe;
-            box-shadow: 0 0 100px #bc13fe, inset 0 0 50px #bc13fe; opacity: 0.1; z-index: -1; animation: pulseRotate 10s infinite linear;
+            box-shadow: 0 0 100px #bc13fe, inset 0 0 50px #bc13fe; opacity: 0.1; z-index: -1; animation: pulseRotate 15s infinite linear;
         }
-        @keyframes pulseRotate { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.2); } 100% { transform: translate(-50%, -50%) scale(1); } }
+        @keyframes pulseRotate { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.1); } 100% { transform: translate(-50%, -50%) scale(1); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+        input, select { background: rgba(0,0,0,0.5) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
@@ -39,29 +40,30 @@
     </aside>
 
     <main class="flex-1 p-6 md:p-16 pb-32">
-        <section id="tab-shortener" class="tab-content active">
+        <section id="tab-shortener" class="tab-content active text-center">
             <h2 class="text-4xl font-black mb-8">Encurtador de Links</h2>
-            <div class="glass p-8 rounded-[35px] flex flex-col md:flex-row gap-4 mb-10 shadow-2xl">
-                <input id="short-url-input" type="text" placeholder="Cole seu link longo..." class="flex-1 bg-black/50 p-5 rounded-2xl outline-none border border-white/5 focus:border-[#bc13fe]">
+            <div class="glass p-8 rounded-[35px] max-w-3xl mx-auto flex flex-col md:flex-row gap-4 mb-10 shadow-2xl">
+                <input id="short-url-input" type="text" placeholder="Cole seu link longo..." class="flex-1 p-5 rounded-2xl outline-none focus:border-[#bc13fe]">
                 <button onclick="handleShorten()" id="btn-encurtar" class="bg-[#bc13fe] px-12 py-5 rounded-2xl font-black">ENCURTAR</button>
             </div>
-            <div id="links-list" class="space-y-4"></div>
+            <!-- Lista Centralizada -->
+            <div id="links-list" class="space-y-4 max-w-xl mx-auto"></div>
         </section>
 
-        <section id="tab-qrcode" class="tab-content">
+        <section id="tab-qrcode" class="tab-content text-center">
             <h2 class="text-4xl font-black mb-8">Gerador QR Code</h2>
-            <div class="glass p-10 rounded-[40px] max-w-xl">
-                <input id="qr-input" type="text" placeholder="Link..." class="w-full bg-black/50 p-5 rounded-2xl mb-6 border border-white/5 outline-none focus:border-blue-500">
+            <div class="glass p-10 rounded-[40px] max-w-xl mx-auto">
+                <input id="qr-input" type="text" placeholder="Link..." class="w-full p-5 rounded-2xl mb-6 outline-none focus:border-blue-500">
                 <button onclick="handleQR()" class="w-full bg-blue-600 py-5 rounded-2xl font-black">GERAR AGORA</button>
                 <div id="qr-result" class="mt-10 flex flex-col items-center hidden"><div class="bg-white p-5 rounded-3xl"><img id="qr-img" class="w-48 h-48"></div></div>
             </div>
         </section>
 
-        <section id="tab-yt" class="tab-content">
+        <section id="tab-yt" class="tab-content text-center">
             <h2 class="text-4xl font-black mb-8">YouTube Downloader</h2>
-            <div class="glass p-10 rounded-[40px] max-w-xl text-center">
-                <input id="yt-url" type="text" placeholder="Link do vídeo..." class="w-full bg-black/50 p-5 rounded-2xl mb-4 border border-white/5 outline-none focus:border-red-600">
-                <select id="yt-format" class="w-full bg-black p-5 rounded-2xl mb-8 border border-white/5">
+            <div class="glass p-10 rounded-[40px] max-w-xl mx-auto">
+                <input id="yt-url" type="text" placeholder="Link do vídeo..." class="w-full p-5 rounded-2xl mb-4 outline-none focus:border-red-600">
+                <select id="yt-format" class="w-full p-5 rounded-2xl mb-8 outline-none">
                     <option value="mp3">MP3 (Áudio)</option>
                     <option value="mp4">MP4 (Vídeo)</option>
                 </select>
@@ -74,10 +76,8 @@
     <div id="plan-modal" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[100] hidden items-center justify-center p-4">
         <div class="max-w-5xl w-full text-center">
             <button onclick="toggleModal()" class="absolute top-10 right-10 text-4xl">&times;</button>
+            <h2 class="text-4xl font-black mb-12">Escolha seu <span class="text-[#bc13fe]">Plano Pro</span></h2>
             
-            <h2 class="text-4xl font-black mb-4">Escolha seu <span class="text-[#bc13fe]">Plano Pro</span></h2>
-            
-            <!-- Toggle Mensal/Anual -->
             <div class="flex items-center justify-center gap-4 mb-12">
                 <span id="label-mensal" class="text-sm font-bold text-white">Mensal</span>
                 <div onclick="toggleBilling()" class="w-14 h-7 bg-white/10 rounded-full p-1 cursor-pointer flex items-center">
@@ -87,49 +87,76 @@
             </div>
 
             <div class="grid md:grid-cols-3 gap-6">
-                <!-- Núcleo -->
                 <div class="glass p-8 rounded-[35px] border-white/5">
                     <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Núcleo</h3>
-                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="5" data-annual="48">$5</span><span class="text-sm text-gray-500 font-normal">/mês</span></div>
-                    <button onclick="openCheckout('Núcleo')" class="w-full py-4 rounded-xl bg-white/5 font-bold hover:bg-white/10 transition">ASSINAR</button>
+                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="29" data-annual="290">R$29</span></div>
+                    <button onclick="openCheckout('Núcleo', 29)" class="w-full py-4 rounded-xl bg-white/5 font-bold">ASSINAR</button>
                 </div>
-                <!-- Growth -->
                 <div class="glass p-8 rounded-[35px] border-[#bc13fe] relative scale-105">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#bc13fe] text-[10px] px-4 py-1 rounded-full font-black">POPULAR</div>
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#bc13fe] text-[10px] px-3 py-1 rounded-full font-black">POPULAR</div>
                     <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Crescimento</h3>
-                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="15" data-annual="144">$15</span><span class="text-sm text-gray-500 font-normal">/mês</span></div>
-                    <button onclick="openCheckout('Crescimento')" class="w-full py-4 rounded-xl bg-[#bc13fe] font-bold hover:brightness-110 transition">ASSINAR AGORA</button>
+                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="59" data-annual="590">R$59</span></div>
+                    <button onclick="openCheckout('Crescimento', 59)" class="w-full py-4 rounded-xl bg-[#bc13fe] font-bold">ASSINAR AGORA</button>
                 </div>
-                <!-- Premium -->
                 <div class="glass p-8 rounded-[35px] border-white/5">
                     <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Premium</h3>
-                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="100" data-annual="960">$100</span><span class="text-sm text-gray-500 font-normal">/mês</span></div>
-                    <button onclick="openCheckout('Premium')" class="w-full py-4 rounded-xl bg-white/5 font-bold hover:bg-white/10 transition">ASSINAR</button>
+                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="149" data-annual="1490">R$149</span></div>
+                    <button onclick="openCheckout('Premium', 149)" class="w-full py-4 rounded-xl bg-white/5 font-bold">ASSINAR</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- CHECKOUT MODAL (Simulado) -->
+    <!-- CHECKOUT MODAL ATUALIZADO -->
     <div id="checkout-modal" class="fixed inset-0 bg-black/95 z-[200] hidden items-center justify-center p-4">
-        <div class="glass p-10 rounded-[40px] max-w-md w-full text-center">
-            <h2 class="text-2xl font-black mb-6">Pagamento Seguro</h2>
-            <p id="checkout-plan" class="text-[#bc13fe] font-bold mb-8"></p>
-            <div class="flex flex-col gap-4">
-                <button onclick="alert('Pix Gerado!')" class="bg-white text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2">📱 Pagar com PIX</button>
-                <button onclick="alert('Área de Cartão')" class="bg-blue-600 text-white py-4 rounded-xl font-bold">💳 Cartão de Crédito</button>
+        <div class="glass p-10 rounded-[40px] max-w-lg w-full">
+            <h2 class="text-2xl font-black mb-2 text-center">Pagamento Seguro</h2>
+            <p id="checkout-plan" class="text-[#bc13fe] font-bold mb-8 text-center"></p>
+            
+            <div class="space-y-4 mb-8">
+                <input type="text" id="cust-name" placeholder="Nome Completo" class="w-full p-4 rounded-xl outline-none">
+                <input type="email" id="cust-email" placeholder="E-mail de Acesso" class="w-full p-4 rounded-xl outline-none">
             </div>
-            <button onclick="toggleCheckout()" class="mt-6 text-gray-500 text-sm">Cancelar</button>
+
+            <div class="flex border-b border-white/10 mb-6">
+                <button onclick="setPayMode('pix')" id="btn-pay-pix" class="flex-1 py-3 border-b-2 border-[#bc13fe] font-bold">PIX</button>
+                <button onclick="setPayMode('card')" id="btn-pay-card" class="flex-1 py-3 border-b-2 border-transparent text-gray-500">CARTÃO</button>
+            </div>
+
+            <div id="area-pix" class="text-center">
+                <div class="bg-white p-4 inline-block rounded-2xl mb-4">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=88996317399" class="w-32 h-32">
+                </div>
+                <p class="text-xs text-gray-400 mb-4">Chave PIX: <span class="text-white font-bold">88996317399</span></p>
+                <button onclick="confirmarPagamento('Pix')" class="w-full bg-[#bc13fe] py-4 rounded-xl font-bold">CONFIRMAR E ENVIAR COMPROVANTE</button>
+            </div>
+
+            <div id="area-card" class="hidden space-y-4">
+                <div class="flex gap-2 justify-center mb-4 opacity-50">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" width="40">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" width="40">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="40">
+                </div>
+                <input type="text" placeholder="Número do Cartão" class="w-full p-4 rounded-xl outline-none">
+                <div class="flex gap-4">
+                    <input type="text" placeholder="MM/AA" class="w-1/2 p-4 rounded-xl outline-none">
+                    <input type="text" placeholder="CVV" class="w-1/2 p-4 rounded-xl outline-none">
+                </div>
+                <p id="parcelas-text" class="text-xs text-green-500 font-bold"></p>
+                <button onclick="confirmarPagamento('Cartão')" class="w-full bg-[#bc13fe] py-4 rounded-xl font-bold uppercase">Finalizar Compra</button>
+            </div>
+            
+            <button onclick="toggleCheckout()" class="w-full mt-4 text-gray-600 text-xs uppercase tracking-widest">Cancelar</button>
         </div>
     </div>
 
     <footer class="fixed bottom-0 left-0 md:left-72 right-0 p-4 bg-black/80 text-center border-t border-white/5 text-[9px] text-gray-600 uppercase z-40">
         <div class="flex justify-center gap-4 mb-1">
-            <a href="privacidade.html">Privacidade</a>
-            <a href="termos.html">Termos</a>
-            <a href="https://wa.me/5511999999999" class="text-[#bc13fe]">Suporte</a>
+            <a href="privacidade.html" class="hover:text-white">Privacidade</a>
+            <a href="termos.html" class="hover:text-white">Termos</a>
+            <a href="https://wa.me/88996317399" class="text-[#bc13fe]">Suporte 24h</a>
         </div>
-        <span>© 2024 SmallLink Pro SaaS</span>
+        <span>© 2024 SmallLink Pro SaaS - CNPJ: 88.996.317/399</span>
     </footer>
 
     <script src="JS/script.js"></script>
