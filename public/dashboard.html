@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmallLink | SaaS Pro</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -12,56 +13,32 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
         .nav-btn.active { background: #bc13fe; box-shadow: 0 0 25px rgba(188, 19, 254, 0.4); }
-        
-        /* Círculo Neon Vivo (Animado) */
         .neon-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 500px; height: 500px; border-radius: 50%;
-            border: 2px solid #bc13fe; box-shadow: 0 0 100px #bc13fe, inset 0 0 50px #bc13fe;
-            opacity: 0.1; z-index: -1; animation: pulseRotate 10s infinite linear;
+            width: 500px; height: 500px; border-radius: 50%; border: 2px solid #bc13fe;
+            box-shadow: 0 0 100px #bc13fe, inset 0 0 50px #bc13fe; opacity: 0.1; z-index: -1; animation: pulseRotate 10s infinite linear;
         }
-        @keyframes pulseRotate {
-            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0.05; }
-            50% { transform: translate(-50%, -50%) scale(1.2) rotate(180deg); opacity: 0.15; }
-            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); opacity: 0.05; }
-        }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Estilo WhatsApp */
-        .btn-whatsapp {
-            position: fixed; bottom: 85px; right: 25px; z-index: 90;
-            background: #25d366; color: white; width: 60px; height: 60px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
-            transition: all 0.3s ease;
-        }
-        .btn-whatsapp:hover { transform: scale(1.1); }
+        @keyframes pulseRotate { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.2); } 100% { transform: translate(-50%, -50%) scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
     <div class="neon-bg"></div>
 
-    <!-- WHATSAPP -->
-    <a href="https://wa.me/5511999999999" target="_blank" class="btn-whatsapp">
-        <svg width="32" height="32" fill="white" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.483 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.308 1.656zm6.757-4.101c1.472.873 3.012 1.332 4.598 1.333 5.397 0 9.791-4.393 9.794-9.792.002-5.398-4.39-9.791-9.789-9.791-2.615-.001-5.07 1.018-6.918 2.87-1.85 1.851-2.868 4.307-2.869 6.92-.001 1.738.467 3.43 1.354 4.907l-.95 3.47 3.553-.932z"/></svg>
-    </a>
-
-    <!-- Sidebar -->
     <aside class="w-full md:w-72 glass p-8 flex flex-col z-50">
         <div class="flex items-center gap-3 mb-10">
             <div class="w-10 h-10 bg-gradient-to-br from-[#bc13fe] to-[#2463f1] rounded-xl flex items-center justify-center font-black">SL</div>
             <div class="text-2xl font-black">Small<span class="text-[#bc13fe]">Link</span></div>
         </div>
         <nav class="flex md:flex-col gap-3">
-            <button onclick="switchTab('shortener')" id="btn-shortener" class="nav-btn active text-left p-4 rounded-2xl font-bold">🔗 Encurtador</button>
-            <button onclick="switchTab('qrcode')" id="btn-qrcode" class="nav-btn text-left p-4 rounded-2xl font-bold">📱 QR Code</button>
-            <button onclick="switchTab('yt')" id="btn-yt" class="nav-btn text-left p-4 rounded-2xl font-bold">🎥 Downloader</button>
+            <button onclick="switchTab('shortener')" id="btn-shortener" class="nav-btn active text-left p-4 rounded-2xl font-bold transition">🔗 Encurtador</button>
+            <button onclick="switchTab('qrcode')" id="btn-qrcode" class="nav-btn text-left p-4 rounded-2xl font-bold transition">📱 QR Code</button>
+            <button onclick="switchTab('yt')" id="btn-yt" class="nav-btn text-left p-4 rounded-2xl font-bold transition">🎥 Downloader</button>
         </nav>
         <button onclick="toggleModal()" class="mt-10 bg-yellow-500 text-black p-4 rounded-2xl font-black text-xs hover:scale-105 transition">UPGRADE PRO</button>
     </aside>
 
-    <main class="flex-1 p-6 md:p-16">
-        <!-- Encurtador -->
+    <main class="flex-1 p-6 md:p-16 pb-32">
         <section id="tab-shortener" class="tab-content active">
             <h2 class="text-4xl font-black mb-8">Encurtador de Links</h2>
             <div class="glass p-8 rounded-[35px] flex flex-col md:flex-row gap-4 mb-10 shadow-2xl">
@@ -71,122 +48,90 @@
             <div id="links-list" class="space-y-4"></div>
         </section>
 
-        <!-- QR Code -->
         <section id="tab-qrcode" class="tab-content">
-            <h2 class="text-4xl font-black mb-8">Gerador de QR Code</h2>
+            <h2 class="text-4xl font-black mb-8">Gerador QR Code</h2>
             <div class="glass p-10 rounded-[40px] max-w-xl">
-                <input id="qr-input" type="text" placeholder="Link para o QR Code..." class="w-full bg-black/50 p-5 rounded-2xl mb-6 border border-white/5 outline-none focus:border-blue-500">
-                <button onclick="handleQR()" class="w-full bg-blue-600 py-5 rounded-2xl font-black">GERAR QR CODE</button>
-                <div id="qr-result" class="mt-10 flex flex-col items-center hidden">
-                    <div class="bg-white p-5 rounded-3xl"><img id="qr-img" class="w-52 h-52"></div>
-                </div>
+                <input id="qr-input" type="text" placeholder="Link..." class="w-full bg-black/50 p-5 rounded-2xl mb-6 border border-white/5 outline-none focus:border-blue-500">
+                <button onclick="handleQR()" class="w-full bg-blue-600 py-5 rounded-2xl font-black">GERAR AGORA</button>
+                <div id="qr-result" class="mt-10 flex flex-col items-center hidden"><div class="bg-white p-5 rounded-3xl"><img id="qr-img" class="w-48 h-48"></div></div>
             </div>
         </section>
 
-        <!-- Downloader -->
         <section id="tab-yt" class="tab-content">
-            <h2 class="text-4xl font-black mb-8 text-center md:text-left">YouTube Downloader</h2>
+            <h2 class="text-4xl font-black mb-8">YouTube Downloader</h2>
             <div class="glass p-10 rounded-[40px] max-w-xl text-center">
                 <input id="yt-url" type="text" placeholder="Link do vídeo..." class="w-full bg-black/50 p-5 rounded-2xl mb-4 border border-white/5 outline-none focus:border-red-600">
-                <select id="yt-format" class="w-full bg-black p-5 rounded-2xl mb-8 border border-white/5 outline-none">
-                    <option value="mp3">Música (MP3)</option>
-                    <option value="mp4">Vídeo (MP4)</option>
+                <select id="yt-format" class="w-full bg-black p-5 rounded-2xl mb-8 border border-white/5">
+                    <option value="mp3">MP3 (Áudio)</option>
+                    <option value="mp4">MP4 (Vídeo)</option>
                 </select>
-                <button onclick="handleYT()" class="w-full bg-red-600 py-5 rounded-2xl font-black">BAIXAR MÍDIA</button>
+                <button onclick="handleYT()" class="w-full bg-red-600 py-5 rounded-2xl font-black">BAIXAR</button>
             </div>
         </section>
     </main>
 
     <!-- MODAL DE PLANOS -->
-    <div id="plan-modal" class="fixed inset-0 bg-black/90 backdrop-blur-xl z-[100] hidden items-center justify-center p-4">
-        <div class="max-w-4xl w-full">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-3xl font-black">Escolha seu <span class="text-[#bc13fe]">Plano Pro</span></h2>
-                <button onclick="toggleModal()" class="text-4xl">&times;</button>
+    <div id="plan-modal" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[100] hidden items-center justify-center p-4">
+        <div class="max-w-5xl w-full text-center">
+            <button onclick="toggleModal()" class="absolute top-10 right-10 text-4xl">&times;</button>
+            
+            <h2 class="text-4xl font-black mb-4">Escolha seu <span class="text-[#bc13fe]">Plano Pro</span></h2>
+            
+            <!-- Toggle Mensal/Anual -->
+            <div class="flex items-center justify-center gap-4 mb-12">
+                <span id="label-mensal" class="text-sm font-bold text-white">Mensal</span>
+                <div onclick="toggleBilling()" class="w-14 h-7 bg-white/10 rounded-full p-1 cursor-pointer flex items-center">
+                    <div id="toggle-dot" class="w-5 h-5 bg-[#bc13fe] rounded-full transition-all"></div>
+                </div>
+                <span id="label-anual" class="text-sm font-bold text-gray-500">Anual <span class="text-[#bc13fe] text-[10px] ml-1">ECONOMIZE 20%</span></span>
             </div>
+
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass p-8 rounded-3xl text-center border-white/5">
-                    <h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Grátis</h3>
-                    <div class="text-4xl font-black mb-6">$0<span class="text-sm text-gray-500">/mês</span></div>
-                    <button class="w-full py-3 rounded-xl bg-white/5 text-xs font-bold">ATUAL</button>
+                <!-- Núcleo -->
+                <div class="glass p-8 rounded-[35px] border-white/5">
+                    <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Núcleo</h3>
+                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="5" data-annual="48">$5</span><span class="text-sm text-gray-500 font-normal">/mês</span></div>
+                    <button onclick="openCheckout('Núcleo')" class="w-full py-4 rounded-xl bg-white/5 font-bold hover:bg-white/10 transition">ASSINAR</button>
                 </div>
-                <div class="glass p-8 rounded-3xl border-[#bc13fe] text-center relative scale-105">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#bc13fe] text-[10px] px-3 py-1 rounded-full font-black">POPULAR</div>
-                    <h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Premium</h3>
-                    <div class="text-4xl font-black mb-6">$15<span class="text-sm text-gray-500">/mês</span></div>
-                    <button onclick="alert('Checkout Pix/Cartão indisponível em testes')" class="w-full py-3 rounded-xl bg-[#bc13fe] text-xs font-black">ASSINAR AGORA</button>
+                <!-- Growth -->
+                <div class="glass p-8 rounded-[35px] border-[#bc13fe] relative scale-105">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#bc13fe] text-[10px] px-4 py-1 rounded-full font-black">POPULAR</div>
+                    <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Crescimento</h3>
+                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="15" data-annual="144">$15</span><span class="text-sm text-gray-500 font-normal">/mês</span></div>
+                    <button onclick="openCheckout('Crescimento')" class="w-full py-4 rounded-xl bg-[#bc13fe] font-bold hover:brightness-110 transition">ASSINAR AGORA</button>
                 </div>
-                <div class="glass p-8 rounded-3xl border-white/5 text-center">
-                    <h3 class="font-bold mb-4 uppercase text-xs tracking-widest text-gray-500">Enterprise</h3>
-                    <div class="text-4xl font-black mb-6">$100<span class="text-sm text-gray-500">/mês</span></div>
-                    <button class="w-full py-3 rounded-xl bg-white/5 text-xs font-bold uppercase">Falar com time</button>
+                <!-- Premium -->
+                <div class="glass p-8 rounded-[35px] border-white/5">
+                    <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Premium</h3>
+                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="100" data-annual="960">$100</span><span class="text-sm text-gray-500 font-normal">/mês</span></div>
+                    <button onclick="openCheckout('Premium')" class="w-full py-4 rounded-xl bg-white/5 font-bold hover:bg-white/10 transition">ASSINAR</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER PARA ADSENSE -->
-    <footer class="fixed bottom-0 left-0 md:left-72 right-0 p-4 bg-black/80 backdrop-blur-sm text-center border-t border-white/5 text-[9px] text-gray-500 uppercase tracking-widest z-40">
-        <div class="flex justify-center gap-4 mb-1">
-            <a href="privacidade.html" class="hover:text-white">Privacidade</a>
-            <a href="termos.html" class="hover:text-white">Termos</a>
-            <a href="https://wa.me/88996317399" class="text-[#bc13fe]">Suporte 24h</a>
+    <!-- CHECKOUT MODAL (Simulado) -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black/95 z-[200] hidden items-center justify-center p-4">
+        <div class="glass p-10 rounded-[40px] max-w-md w-full text-center">
+            <h2 class="text-2xl font-black mb-6">Pagamento Seguro</h2>
+            <p id="checkout-plan" class="text-[#bc13fe] font-bold mb-8"></p>
+            <div class="flex flex-col gap-4">
+                <button onclick="alert('Pix Gerado!')" class="bg-white text-black py-4 rounded-xl font-bold flex items-center justify-center gap-2">📱 Pagar com PIX</button>
+                <button onclick="alert('Área de Cartão')" class="bg-blue-600 text-white py-4 rounded-xl font-bold">💳 Cartão de Crédito</button>
+            </div>
+            <button onclick="toggleCheckout()" class="mt-6 text-gray-500 text-sm">Cancelar</button>
         </div>
-        <span>© 2024 SmallLink Pro - Multi-Tool Platform</span>
+    </div>
+
+    <footer class="fixed bottom-0 left-0 md:left-72 right-0 p-4 bg-black/80 text-center border-t border-white/5 text-[9px] text-gray-600 uppercase z-40">
+        <div class="flex justify-center gap-4 mb-1">
+            <a href="privacidade.html">Privacidade</a>
+            <a href="termos.html">Termos</a>
+            <a href="https://wa.me/5511999999999" class="text-[#bc13fe]">Suporte</a>
+        </div>
+        <span>© 2024 SmallLink Pro SaaS</span>
     </footer>
 
-    <!-- JAVASCRIPT INTEGRADO (PARA NÃO DAR ERRO) -->
-    <script>
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.getElementById('btn-' + tabId).classList.add('active');
-        }
-
-        function toggleModal() {
-            const modal = document.getElementById('plan-modal');
-            modal.classList.toggle('hidden');
-            modal.classList.toggle('flex');
-        }
-
-        async function handleShorten() {
-            const input = document.getElementById('short-url-input');
-            const btn = document.getElementById('btn-encurtar');
-            if(!input.value) return alert("Insira um link");
-            btn.innerText = "GERANDO...";
-            try {
-                const response = await fetch('/shorten', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ urlOriginal: input.value })
-                });
-                const data = await response.json();
-                if(response.status === 403) return alert(data.error);
-                
-                const list = document.getElementById('links-list');
-                const div = document.createElement('div');
-                div.className = "glass p-6 rounded-2xl flex justify-between items-center border-l-4 border-[#bc13fe] mt-4";
-                div.innerHTML = `<div><p class="text-[#bc13fe] font-bold text-sm">${data.shortUrl}</p></div><button onclick="navigator.clipboard.writeText('${data.shortUrl}'); alert('Copiado!')" class="bg-white/10 px-4 py-2 rounded-xl text-[10px] font-bold">COPIAR</button>`;
-                list.prepend(div);
-                input.value = "";
-            } catch (e) { alert("Erro no servidor."); }
-            btn.innerText = "ENCURTAR";
-        }
-
-        function handleQR() {
-            const val = document.getElementById('qr-input').value;
-            if(!val) return alert("Insira um link");
-            document.getElementById('qr-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(val)}`;
-            document.getElementById('qr-result').classList.remove('hidden');
-        }
-
-        function handleYT() {
-            const url = document.getElementById('yt-url').value;
-            const format = document.getElementById('yt-format').value;
-            if(!url.includes('youtu')) return alert("Link inválido");
-            window.location.href = `/api/download?url=${encodeURIComponent(url)}&format=${format}`;
-        }
-    </script>
+    <script src="JS/script.js"></script>
 </body>
 </html>
