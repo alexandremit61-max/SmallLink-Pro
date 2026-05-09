@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { createClient } = require('@supabase/supabase-js');
-const ytdl = require('@distube/ytdl-core');
 const app = express();
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
@@ -12,16 +11,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// ENCURTADOR COM LIMITE
+// ENCURTADOR COM LIMITE DE 5 LINKS
 app.post('/shorten', async (req, res) => {
     const { urlOriginal } = req.body;
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    const { count } = await supabase.from('links').select('*', { count: 'exact', head: true }).eq('criado_em_ip', ip);
+    const ipUser = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
 
-    if (count >= 3) return res.status(403).json({ error: "Limite atingido! Assine o Pro." });
+    // Conta no Supabase quantos links esse IP já criou
+    const { count } = await supabase.from('links').select('*', { count: 'exact', head: true }).eq('criado_em_ip', ipUser);
+
+    if (count >= 5) {
+        return res.status(403).json({ error: "Limite de 5 links atingido!" });
+    }
 
     const code = Math.random().toString(36).substring(2, 7);
-    await supabase.from('links').insert([{ url_original: urlOriginal, codigo_curto: code, criado_em_ip: ip }]);
+    await supabase.from('links').insert([{ url_original: urlOriginal, codigo_curto: code, criado_em_ip: ipUser }]);
+    
     res.json({ shortUrl: `${BASE_URL}/${code}` });
 });
 
@@ -35,15 +39,5 @@ app.get('/:code', async (req, res, next) => {
     next();
 });
 
-// DOWNLOADER
-app.get('/api/download', async (req, res) => {
-    const { url, format } = req.query;
-    try {
-        const options = { quality: 'highest', filter: format === 'mp3' ? 'audioonly' : 'audioandvideo' };
-        res.header('Content-Disposition', `attachment; filename="SmallLink_Media.${format}"`);
-        ytdl(url, options).pipe(res);
-    } catch (e) { res.status(500).send("Erro"); }
-});
-
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`✅ Servidor rodando na porta ${PORT}`));
+app.listen(PORT, () => console.log(`✅ SmallLink SaaS rodando na porta ${PORT}`));

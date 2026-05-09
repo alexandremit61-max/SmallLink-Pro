@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmallLink | SaaS Pro</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>SmallLink | Pro</title>
+    <!-- FAVICON NA NOVA PASTA -->
+
+<link rel="icon" type="image/jpg" href="assets/img/sierra-leone.jpg">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
@@ -15,12 +18,12 @@
         .nav-btn.active { background: #bc13fe; box-shadow: 0 0 25px rgba(188, 19, 254, 0.4); }
         .neon-bg {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 500px; height: 500px; border-radius: 50%; border: 2px solid #bc13fe;
+            width: 550px; height: 550px; border-radius: 50%; border: 2px solid #bc13fe;
             box-shadow: 0 0 100px #bc13fe, inset 0 0 50px #bc13fe; opacity: 0.1; z-index: -1; animation: pulseRotate 15s infinite linear;
         }
         @keyframes pulseRotate { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.1); } 100% { transform: translate(-50%, -50%) scale(1); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
-        input, select { background: rgba(0,0,0,0.5) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; }
+        input { background: rgba(0,0,0,0.5) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
@@ -28,135 +31,82 @@
 
     <aside class="w-full md:w-72 glass p-8 flex flex-col z-50">
         <div class="flex items-center gap-3 mb-10">
-            <div class="w-10 h-10 bg-gradient-to-br from-[#bc13fe] to-[#2463f1] rounded-xl flex items-center justify-center font-black">SL</div>
+            <div class="w-10 h-10 bg-gradient-to-br from-[#bc13fe] to-[#2463f1] rounded-xl flex items-center justify-center font-black text-white">SL</div>
             <div class="text-2xl font-black">Small<span class="text-[#bc13fe]">Link</span></div>
         </div>
         <nav class="flex md:flex-col gap-3">
             <button onclick="switchTab('shortener')" id="btn-shortener" class="nav-btn active text-left p-4 rounded-2xl font-bold transition">🔗 Encurtador</button>
             <button onclick="switchTab('qrcode')" id="btn-qrcode" class="nav-btn text-left p-4 rounded-2xl font-bold transition">📱 QR Code</button>
-            <button onclick="switchTab('yt')" id="btn-yt" class="nav-btn text-left p-4 rounded-2xl font-bold transition">🎥 Downloader</button>
         </nav>
-        <button onclick="toggleModal()" class="mt-10 bg-yellow-500 text-black p-4 rounded-2xl font-black text-xs hover:scale-105 transition">UPGRADE PRO</button>
+        <button onclick="toggleModal()" class="mt-auto bg-yellow-500 text-black p-4 rounded-2xl font-black text-xs hover:scale-105 transition shadow-lg shadow-yellow-500/20">UPGRADE PRO</button>
     </aside>
 
-    <main class="flex-1 p-6 md:p-16 pb-32">
-        <section id="tab-shortener" class="tab-content active text-center">
+    <main class="flex-1 p-6 md:p-16 flex flex-col items-center justify-center">
+        <section id="tab-shortener" class="tab-content active w-full max-w-3xl text-center">
             <h2 class="text-4xl font-black mb-8">Encurtador de Links</h2>
-            <div class="glass p-8 rounded-[35px] max-w-3xl mx-auto flex flex-col md:flex-row gap-4 mb-10 shadow-2xl">
-                <input id="short-url-input" type="text" placeholder="Cole seu link longo..." class="flex-1 p-5 rounded-2xl outline-none focus:border-[#bc13fe]">
+            <div class="glass p-8 rounded-[35px] flex flex-col md:flex-row gap-4 mb-10 shadow-2xl">
+                <input id="short-url-input" type="text" placeholder="Cole seu link longo aqui..." class="flex-1 p-5 rounded-2xl outline-none focus:border-[#bc13fe]">
                 <button onclick="handleShorten()" id="btn-encurtar" class="bg-[#bc13fe] px-12 py-5 rounded-2xl font-black">ENCURTAR</button>
             </div>
-            <!-- Lista Centralizada -->
-            <div id="links-list" class="space-y-4 max-w-xl mx-auto"></div>
+            <div id="links-list" class="space-y-4 w-full max-w-xl mx-auto text-left"></div>
         </section>
 
-        <section id="tab-qrcode" class="tab-content text-center">
+        <section id="tab-qrcode" class="tab-content w-full max-w-xl text-center">
             <h2 class="text-4xl font-black mb-8">Gerador QR Code</h2>
-            <div class="glass p-10 rounded-[40px] max-w-xl mx-auto">
-                <input id="qr-input" type="text" placeholder="Link..." class="w-full p-5 rounded-2xl mb-6 outline-none focus:border-blue-500">
+            <div class="glass p-10 rounded-[40px]">
+                <input id="qr-input" type="text" placeholder="Link para o QR..." class="w-full p-5 rounded-2xl mb-6 outline-none focus:border-blue-500 text-center">
                 <button onclick="handleQR()" class="w-full bg-blue-600 py-5 rounded-2xl font-black">GERAR AGORA</button>
-                <div id="qr-result" class="mt-10 flex flex-col items-center hidden"><div class="bg-white p-5 rounded-3xl"><img id="qr-img" class="w-48 h-48"></div></div>
-            </div>
-        </section>
-
-        <section id="tab-yt" class="tab-content text-center">
-            <h2 class="text-4xl font-black mb-8">YouTube Downloader</h2>
-            <div class="glass p-10 rounded-[40px] max-w-xl mx-auto">
-                <input id="yt-url" type="text" placeholder="Link do vídeo..." class="w-full p-5 rounded-2xl mb-4 outline-none focus:border-red-600">
-                <select id="yt-format" class="w-full p-5 rounded-2xl mb-8 outline-none">
-                    <option value="mp3">MP3 (Áudio)</option>
-                    <option value="mp4">MP4 (Vídeo)</option>
-                </select>
-                <button onclick="handleYT()" class="w-full bg-red-600 py-5 rounded-2xl font-black">BAIXAR</button>
+                <div id="qr-result" class="mt-10 flex flex-col items-center hidden"><div class="bg-white p-5 rounded-3xl"><img id="qr-img" class="w-52 h-52"></div></div>
             </div>
         </section>
     </main>
 
-    <!-- MODAL DE PLANOS -->
+    <!-- MODAL DE PLANOS ATUALIZADO (R$10 e R$50) -->
     <div id="plan-modal" class="fixed inset-0 bg-black/95 backdrop-blur-2xl z-[100] hidden items-center justify-center p-4">
-        <div class="max-w-5xl w-full text-center">
-            <button onclick="toggleModal()" class="absolute top-10 right-10 text-4xl">&times;</button>
-            <h2 class="text-4xl font-black mb-12">Escolha seu <span class="text-[#bc13fe]">Plano Pro</span></h2>
+        <div class="max-w-4xl w-full text-center">
+            <button onclick="toggleModal()" class="absolute top-10 right-10 text-4xl text-gray-500">&times;</button>
+            <h2 class="text-4xl font-black mb-16 uppercase tracking-tighter text-white">Libere o <span class="text-[#bc13fe]">Acesso Total</span></h2>
             
-            <div class="flex items-center justify-center gap-4 mb-12">
-                <span id="label-mensal" class="text-sm font-bold text-white">Mensal</span>
-                <div onclick="toggleBilling()" class="w-14 h-7 bg-white/10 rounded-full p-1 cursor-pointer flex items-center">
-                    <div id="toggle-dot" class="w-5 h-5 bg-[#bc13fe] rounded-full transition-all"></div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <!-- PLANO MENSAL -->
+                <div class="glass p-10 rounded-[40px] border-white/10 hover:border-[#bc13fe]/50 transition">
+                    <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Mensal Profissional</h3>
+                    <div class="text-5xl font-black mb-2 text-white">R$10</div>
+                    <p class="text-gray-500 text-xs mb-8 text-white">por mês</p>
+                    <ul class="text-sm text-gray-400 space-y-3 mb-10 text-left">
+                        <li>✓ Links Ilimitados</li>
+                        <li>✓ QR Codes Dinâmicos</li>
+                        <li>✓ Suporte via WhatsApp</li>
+                        <li>✓ Sem Anúncios</li>
+                    </ul>
+                    <button onclick="openWhatsAppCheckout('MENSAL', 10)" class="w-full py-4 rounded-2xl bg-white/5 font-black hover:bg-[#bc13fe] transition">ASSINAR MENSAL</button>
                 </div>
-                <span id="label-anual" class="text-sm font-bold text-gray-500">Anual <span class="text-[#bc13fe] text-[10px] ml-1">ECONOMIZE 20%</span></span>
-            </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass p-8 rounded-[35px] border-white/5">
-                    <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Núcleo</h3>
-                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="29" data-annual="290">R$29</span></div>
-                    <button onclick="openCheckout('Núcleo', 29)" class="w-full py-4 rounded-xl bg-white/5 font-bold">ASSINAR</button>
-                </div>
-                <div class="glass p-8 rounded-[35px] border-[#bc13fe] relative scale-105">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#bc13fe] text-[10px] px-3 py-1 rounded-full font-black">POPULAR</div>
-                    <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Crescimento</h3>
-                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="59" data-annual="590">R$59</span></div>
-                    <button onclick="openCheckout('Crescimento', 59)" class="w-full py-4 rounded-xl bg-[#bc13fe] font-bold">ASSINAR AGORA</button>
-                </div>
-                <div class="glass p-8 rounded-[35px] border-white/5">
-                    <h3 class="font-bold text-gray-500 uppercase text-xs mb-4">Premium</h3>
-                    <div class="text-5xl font-black mb-8"><span class="price-val" data-monthly="149" data-annual="1490">R$149</span></div>
-                    <button onclick="openCheckout('Premium', 149)" class="w-full py-4 rounded-xl bg-white/5 font-bold">ASSINAR</button>
+                <!-- PLANO ANUAL -->
+                <div class="glass p-10 rounded-[40px] border-[#bc13fe] relative scale-105 shadow-2xl">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#bc13fe] text-[10px] px-4 py-1 rounded-full font-black uppercase tracking-widest text-white">MELHOR ESCOLA</div>
+                    <h3 class="font-bold text-[#bc13fe] uppercase text-xs mb-4 text-white">Anual</h3>
+                    <div class="text-5xl font-black mb-2 text-white">R$50</div>
+                    <p class="text-green-400 text-xs font-bold mb-8">Economia de R$70 ao ano!</p>
+                    <ul class="text-sm text-gray-200 space-y-3 mb-10 text-left">
+                        <li>✓ Tudo do Mensal</li>
+                        <li>✓ Acesso de 12 Meses</li>
+                        <li>✓ Prioridade no Suporte</li>
+                        <li>✓ Certificado de Assinante</li>
+                    </ul>
+                    <button onclick="openWhatsAppCheckout('ANUAL', 50)" class="w-full py-4 rounded-2xl bg-[#bc13fe] font-black hover:brightness-110 transition shadow-lg shadow-purple-500/30">ASSINAR ANUAL</button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- CHECKOUT MODAL ATUALIZADO -->
-    <div id="checkout-modal" class="fixed inset-0 bg-black/95 z-[200] hidden items-center justify-center p-4">
-        <div class="glass p-10 rounded-[40px] max-w-lg w-full">
-            <h2 class="text-2xl font-black mb-2 text-center">Pagamento Seguro</h2>
-            <p id="checkout-plan" class="text-[#bc13fe] font-bold mb-8 text-center"></p>
-            
-            <div class="space-y-4 mb-8">
-                <input type="text" id="cust-name" placeholder="Nome Completo" class="w-full p-4 rounded-xl outline-none">
-                <input type="email" id="cust-email" placeholder="E-mail de Acesso" class="w-full p-4 rounded-xl outline-none">
-            </div>
-
-            <div class="flex border-b border-white/10 mb-6">
-                <button onclick="setPayMode('pix')" id="btn-pay-pix" class="flex-1 py-3 border-b-2 border-[#bc13fe] font-bold">PIX</button>
-                <button onclick="setPayMode('card')" id="btn-pay-card" class="flex-1 py-3 border-b-2 border-transparent text-gray-500">CARTÃO</button>
-            </div>
-
-            <div id="area-pix" class="text-center">
-                <div class="bg-white p-4 inline-block rounded-2xl mb-4">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=88996317399" class="w-32 h-32">
-                </div>
-                <p class="text-xs text-gray-400 mb-4">Chave PIX: <span class="text-white font-bold">88996317399</span></p>
-                <button onclick="confirmarPagamento('Pix')" class="w-full bg-[#bc13fe] py-4 rounded-xl font-bold">CONFIRMAR E ENVIAR COMPROVANTE</button>
-            </div>
-
-            <div id="area-card" class="hidden space-y-4">
-                <div class="flex gap-2 justify-center mb-4 opacity-50">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" width="40">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" width="40">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="40">
-                </div>
-                <input type="text" placeholder="Número do Cartão" class="w-full p-4 rounded-xl outline-none">
-                <div class="flex gap-4">
-                    <input type="text" placeholder="MM/AA" class="w-1/2 p-4 rounded-xl outline-none">
-                    <input type="text" placeholder="CVV" class="w-1/2 p-4 rounded-xl outline-none">
-                </div>
-                <p id="parcelas-text" class="text-xs text-green-500 font-bold"></p>
-                <button onclick="confirmarPagamento('Cartão')" class="w-full bg-[#bc13fe] py-4 rounded-xl font-bold uppercase">Finalizar Compra</button>
-            </div>
-            
-            <button onclick="toggleCheckout()" class="w-full mt-4 text-gray-600 text-xs uppercase tracking-widest">Cancelar</button>
         </div>
     </div>
 
     <footer class="fixed bottom-0 left-0 md:left-72 right-0 p-4 bg-black/80 text-center border-t border-white/5 text-[9px] text-gray-600 uppercase z-40">
-        <div class="flex justify-center gap-4 mb-1">
-            <a href="privacidade.html" class="hover:text-white">Privacidade</a>
-            <a href="termos.html" class="hover:text-white">Termos</a>
-            <a href="https://wa.me/88996317399" class="text-[#bc13fe]">Suporte 24h</a>
+        <div class="flex justify-center gap-6 mb-1">
+            <a href="privacidade.html" class="hover:text-white transition">Privacidade</a>
+            <a href="termos.html" class="hover:text-white transition">Termos</a>
+            <a href="https://wa.me/88996317399" target="_blank" class="text-[#bc13fe] font-bold">Suporte 88 99631-7399</a>
         </div>
-        <span>© 2024 SmallLink Pro SaaS - CNPJ: 88.996.317/399</span>
+        <span>© 2024 SmallLink Pro Business</span>
     </footer>
 
     <script src="JS/script.js"></script>
